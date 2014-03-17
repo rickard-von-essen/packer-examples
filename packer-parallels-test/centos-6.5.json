@@ -1,0 +1,6 @@
+{
+  "iso_url": "../isos/CentOS-6.5-x86_64-bin-DVD1.iso",
+  "iso_checksum": "83221db52687c7b857e65bfe60787838",
+  "iso_checksum_type": "md5",
+  "ks_file": "centos-6.5-ks.cfg"
+}

@@ -1,0 +1,29 @@
+{
+  "variables": {
+    "root_pwd": null
+  },
+
+  "builders": [
+    {
+      "type": "parallels-pvm",
+      "source_path": "output-parallels-iso/packer-parallels-iso.pvm",
+      "ssh_username": "root",
+      "ssh_password": "{{user `root_pwd`}}",
+      "shutdown_command": "shutdown -P now",
+      "floppy_files": [
+        "floppy.file"
+      ],
+      "prlctl": [
+        ["set", "{{.Name}}", "--cpus", "2"],
+        ["set", "{{.Name}}", "--memsize", "2048"]
+      ]
+    }
+  ],
+  "provisioners": [
+    {
+      "type": "shell",
+      "inline": ["yum groupinstall -y 'Development tools'"]
+    }
+  ]
+}
+

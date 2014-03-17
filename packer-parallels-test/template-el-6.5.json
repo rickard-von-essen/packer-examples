@@ -1,0 +1,41 @@
+{
+  "variables": {
+    "root_pwd": null,
+    "iso_url": null,
+    "iso_checksum": null,
+    "iso_checksum_type": null,
+    "ks_file": null
+  },
+
+  "builders": [
+    {
+      "type": "parallels-iso",
+      "iso_url": "{{user `iso_url`}}",
+      "iso_checksum": "{{user `iso_checksum`}}",
+      "iso_checksum_type": "{{user `iso_checksum_type`}}",
+      "ssh_username": "root",
+      "ssh_password": "{{user `root_pwd`}}",
+      "boot_wait": "3s",
+      "boot_command":
+      [
+        "<tab><wait> ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/{{user `ks_file`}} <return>"
+      ],
+      "disk_size": 15000,
+      "shutdown_command": "shutdown -P now",
+      "guest_os_type": "linux",
+      "guest_os_distribution": "rhel",
+      "floppy_files": [
+        "floppy.file"
+      ],
+      "parallels_tools_mode": "upload",
+      "parallels_tools_path": "../isos/prl-tools-lin.iso",
+      "http_directory": "http_dir",
+      "delete_vm": "false",
+      "prlctl": [
+        ["set", "{{.Name}}", "--cpus", "2"],
+        ["set", "{{.Name}}", "--memsize", "2048"]
+      ]
+    }
+  ]
+}
+

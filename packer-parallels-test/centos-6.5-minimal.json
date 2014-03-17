@@ -1,0 +1,6 @@
+{
+  "iso_url": "../isos/CentOS-6.5-x86_64-minimal.iso",
+  "iso_checksum": "0d9dc37b5dd4befa1c440d2174e88a87",
+  "iso_checksum_type": "md5",
+  "ks_file": "centos-6.5-ks.cfg"
+}
