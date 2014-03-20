@@ -1,0 +1,42 @@
+{
+    "builders": [{
+        "type": "parallels-iso",
+        "iso_url": "boot2docker.iso",
+        "iso_checksum": "dc44fd271b09e9c96e065c6629adc07a",
+        "iso_checksum_type": "md5",
+        "boot_wait": "3s",
+        "ssh_username": "docker",
+        "ssh_password": "tcuser",
+        "shutdown_command": "sudo poweroff",
+        "guest_os_type": "linux",
+        "guest_os_distribution": "linux-2.6",
+        "parallels_tools_mode": "disable",
+        "delete_vm": "false",
+        "prlctl": [
+            ["set", "{{.Name}}", "--memsize", "512"]
+        ]
+    }],
+
+    "provisioners": [{
+        "type": "file",
+        "source": "files/",
+        "destination": "/tmp"
+    }, {
+        "type": "shell",
+        "inline": [
+            "mkfs.ext4 -F -L boot2docker-data /dev/sda",
+            "sudo /etc/rc.d/automount",
+            "sudo cp /tmp/bootsync.sh /var/lib/boot2docker/bootsync.sh",
+            "sudo chmod +x /var/lib/boot2docker/bootsync.sh",
+            "sudo cp /tmp/bootlocal.sh /var/lib/boot2docker/bootlocal.sh",
+            "sudo chmod +x /var/lib/boot2docker/bootlocal.sh"
+        ]
+    }],
+
+    "post-processors": [{
+        "type": "vagrant",
+        "include": ["boot2docker.iso"],
+        "vagrantfile_template": "vagrantfile.tpl",
+        "output": "boot2docker.box"
+    }]
+}
